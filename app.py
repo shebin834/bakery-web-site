@@ -74,4 +74,4 @@ def get_orders():
 
 if __name__ == '__main__':
     # use_reloader=False is added to prevent Windows errors
-    app.run(debug=True, use_reloader=False, port=5000)
+     app.run(host="0.0.0.0", port=5000)
