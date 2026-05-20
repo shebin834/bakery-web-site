@@ -95,7 +95,8 @@
                 image_url: imageUrl
             };
 
-            fetch('https://bakery-web-site.onrender.com/api/add-product', { ... })
+            // Corrected Render Live URL here
+            fetch('https://bakery-web-site.onrender.com/api/add-product', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(product)
