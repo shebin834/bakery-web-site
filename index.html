@@ -30,9 +30,14 @@
         .hero-banner-link:hover { transform: scale(1.015); }
         .hero-banner-link img { width: 100%; height: auto; display: block; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12); border-radius: 16px; }
 
-        section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; font-size: 3em; color: var(--kerala-green); margin-bottom: 50px; position: relative; }
+        section { padding: 60px 20px; max-width: 1200px; margin: 0 auto; }
+        .section-title { text-align: center; font-size: 3em; color: var(--kerala-green); margin-bottom: 40px; position: relative; }
         .section-title::after { content: '🦚'; display: block; font-size: 0.4em; margin-top: 10px; color: var(--kasavu-gold); }
+        
+        /* Category Styling */
+        .category-container { margin-bottom: 60px; }
+        .category-heading { font-size: 2em; color: var(--accent-red); border-bottom: 2px dashed var(--kasavu-gold); padding-bottom: 10px; margin-bottom: 30px; font-family: 'Playfair Display', serif; font-weight: bold; }
+        
         .about-text { text-align: center; font-size: 1.2em; line-height: 1.8; color: #444; max-width: 900px; margin: 0 auto; }
 
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
@@ -40,7 +45,7 @@
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 25px rgba(27, 77, 62, 0.15); }
         .product-image { width: 100%; height: 220px; object-fit: cover; }
         .product-card h3 { font-size: 1.6em; margin: 15px 0 5px 0; color: var(--kerala-green); }
-        .product-card p { color: var(--accent-red); font-size: 1.3em; font-weight: 600; margin: 0 0 15px 0; }
+        .product-card p { color: var(--text-dark); font-size: 1.3em; font-weight: 600; margin: 0 0 15px 0; }
         .add-to-cart-btn { background-color: var(--kerala-green); color: white; border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-weight: 500; font-family: 'Poppins', sans-serif; transition: 0.3s; }
         .add-to-cart-btn:hover { background-color: var(--kasavu-gold); color: var(--kerala-green); }
         
@@ -90,9 +95,9 @@
     </section>
 
     <section id="menu" style="display: none;">
-        <h2 class="section-title">Special Curations</h2>
+        <h2 class="section-title">Our Menu</h2>
         <div id="loading" style="text-align: center; font-size: 1.2em;">Fetching our finest selections...</div>
-        <div class="menu-grid" id="menu-grid"></div>
+        <div id="menu-categories-wrapper"></div>
     </section>
 
     <section id="staff" style="background-color: #faf7f0; display: none;">
@@ -141,13 +146,55 @@
             fetch('https://bakery-web-site.onrender.com/api/products')
                 .then(response => response.json())
                 .then(products => {
-                    const menuGrid = document.getElementById('menu-grid');
                     document.getElementById('loading').style.display = 'none';
-                    menuGrid.innerHTML = ''; 
-                    if(products.error) return;
+                    const wrapper = document.getElementById('menu-categories-wrapper');
+                    wrapper.innerHTML = ''; 
+                    if(products.error || products.length === 0) return;
+
+                    const categories = {};
                     products.forEach(product => {
-                        menuGrid.innerHTML += `<div class="product-card"><img src="${product.image_url}" class="product-image"><div style="padding:15px;"><h3>${product.name}</h3><p>₹${product.price}</p><button class="add-to-cart-btn" onclick="addToCart('${product._id}', '${product.name}', ${product.price})">Add to Cart</button></div></div>`;
+                        let cat = product.category || "Other Treats";
+                        
+                        // Updated Categorization (Includes Biscuit and Mixture)
+                        if(cat === "Juice" || cat === "Cold Beverages") {
+                            cat = "🧋 Juices & Refreshing Shakes";
+                        } else if(cat === "Dessert" || cat === "Birthday Cake" || cat === "Ice Cream") {
+                            cat = "🎂 Cakes, Ice Creams & Desserts";
+                        } else if(cat === "Snacks" || cat === "Savory Mixtures" || cat === "Biscuit") {
+                            cat = "🍿 Hot Snacks, Biscuits & Mixtures";
+                        } else if(cat === "Tea" || cat === "Coffee") {
+                            cat = "☕ Premium Tea & Coffee";
+                        } else if(cat === "Fresh Fruits") {
+                            cat = "🍎 Fresh Fruits";
+                        }
+
+                        if(!categories[cat]) categories[cat] = [];
+                        categories[cat].push(product);
                     });
+
+                    for (let catName in categories) {
+                        let catHTML = `
+                            <div class="category-container">
+                                <div class="category-heading">${catName}</div>
+                                <div class="menu-grid">
+                        `;
+
+                        categories[catName].forEach(product => {
+                            catHTML += `
+                                <div class="product-card">
+                                    <img src="${product.image_url}" class="product-image" onerror="this.src='https://images.unsplash.com/photo-1509365465994-3b5e40e6b72a?w=400&q=80'">
+                                    <div style="padding:15px;">
+                                        <h3>${product.name}</h3>
+                                        <p>₹${product.price}</p>
+                                        <button class="add-to-cart-btn" onclick="addToCart('${product._id}', '${product.name}', ${product.price})">Add to Cart</button>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        catHTML += `</div></div>`;
+                        wrapper.innerHTML += catHTML;
+                    }
                 });
         }
 
