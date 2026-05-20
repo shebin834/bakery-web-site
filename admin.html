@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bakery Admin - Manage Items</title>
+    <title>Bakery Admin - Dashboard</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9; display: flex; flex-direction: column; align-items: center; padding: 40px 20px; margin: 0; }
         
@@ -20,7 +20,7 @@
         .add-btn:hover { background-color: #246b43; }
         #message { text-align: center; color: green; font-weight: bold; margin-top: 10px; }
         
-        /* New Styles for Manage Items Section */
+        /* Styles for Manage Items Section */
         .admin-product-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #eee; background: #fdfdfd; margin-bottom: 8px; border-radius: 5px; }
         .admin-product-item:hover { background: #f5f5f5; }
         .product-details { display: flex; align-items: center; gap: 10px; }
@@ -29,6 +29,14 @@
         .delete-btn { width: auto; margin: 0; padding: 6px 12px; background-color: #ff4c4c; color: white; border: none; border-radius: 4px; font-size: 13px; cursor: pointer; }
         .delete-btn:hover { background-color: #d13030; }
         .small-img { width: 40px; height: 40px; object-fit: cover; border-radius: 4px; }
+
+        /* Styles for Orders Section */
+        .orders-container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0px 4px 15px rgba(0,0,0,0.08); width: 100%; max-width: 900px; margin-top: 30px; }
+        .order-card { background: #fdfdfd; border: 1px solid #e0e0e0; padding: 20px; margin-bottom: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .order-card h3 { margin-top: 0; color: #1B4D3E; margin-bottom: 10px; border-bottom: 1px dashed #ccc; padding-bottom: 10px; }
+        .order-card p { margin: 8px 0; font-size: 1.05em; color: #444; }
+        .order-items { color: #A83232; font-weight: bold; }
+        .order-status { background: #ffc107; padding: 4px 10px; border-radius: 4px; font-size: 0.9em; font-weight: bold; color: #333; }
     </style>
 </head>
 <body>
@@ -69,8 +77,15 @@
         </div>
     </div>
 
+    <div class="orders-container">
+        <h2>Customer Orders 🛍️</h2>
+        <div id="admin-orders-list" style="max-height: 500px; overflow-y: auto; padding-right: 10px;">
+            <p style="text-align: center; color: #777;">Loading incoming orders...</p>
+        </div>
+    </div>
+
     <script>
-        // --------- Add Product Functions ---------
+        // --------- Add Product ---------
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function(){
@@ -96,10 +111,8 @@
 
         function sendDataToServer(imageUrl) {
             const product = {
-                name: document.getElementById('name').value,
-                price: parseFloat(document.getElementById('price').value),
-                category: document.getElementById('category').value,
-                image_url: imageUrl
+                name: document.getElementById('name').value, price: parseFloat(document.getElementById('price').value),
+                category: document.getElementById('category').value, image_url: imageUrl
             };
             fetch('https://bakery-web-site.onrender.com/api/add-product', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(product)
@@ -109,7 +122,6 @@
                 const msgBox = document.getElementById('message');
                 msgBox.innerText = "✅ " + data.message; msgBox.style.color = "green";
                 
-                // Clear Form
                 document.getElementById('name').value = ''; document.getElementById('price').value = '';
                 document.getElementById('image_file').value = ''; document.getElementById('preview').style.display = 'none';
                 
@@ -117,11 +129,11 @@
                 btn.innerText = "Add to Menu"; btn.disabled = false;
                 setTimeout(() => { msgBox.innerText = ''; }, 3000);
                 
-                loadAdminProducts(); // Refresh the list automatically
+                loadAdminProducts(); 
             });
         }
 
-        // --------- Manage (Delete) Product Functions ---------
+        // --------- Manage Products ---------
         function loadAdminProducts() {
             fetch('https://bakery-web-site.onrender.com/api/products')
             .then(response => response.json())
@@ -129,18 +141,14 @@
                 const listContainer = document.getElementById('admin-product-list');
                 listContainer.innerHTML = '';
                 if(products.length === 0) {
-                    listContainer.innerHTML = '<p style="text-align: center; color: #777;">Menu is currently empty.</p>';
-                    return;
+                    listContainer.innerHTML = '<p style="text-align: center; color: #777;">Menu is empty.</p>'; return;
                 }
                 products.forEach(item => {
                     listContainer.innerHTML += `
                         <div class="admin-product-item">
                             <div class="product-details">
                                 <img src="${item.image_url}" class="small-img" onerror="this.src='https://images.unsplash.com/photo-1509365465994-3b5e40e6b72a?w=400&q=80'">
-                                <div>
-                                    <div class="item-name">${item.name}</div>
-                                    <div class="item-price">₹${item.price}</div>
-                                </div>
+                                <div><div class="item-name">${item.name}</div><div class="item-price">₹${item.price}</div></div>
                             </div>
                             <button class="delete-btn" onclick="deleteProduct('${item._id}', '${item.name}')">Delete</button>
                         </div>
@@ -150,22 +158,52 @@
         }
 
         function deleteProduct(id, name) {
-            // Confirmation popup before deleting
-            if(!confirm(`Are you sure you want to delete "${name}" from the menu?`)) return;
-            
-            fetch('https://bakery-web-site.onrender.com/api/delete-product/' + id, {
-                method: 'DELETE'
-            })
+            if(!confirm(`Are you sure you want to delete "${name}"?`)) return;
+            fetch('https://bakery-web-site.onrender.com/api/delete-product/' + id, { method: 'DELETE' })
             .then(res => res.json())
-            .then(data => {
-                alert("✅ Item deleted successfully!");
-                loadAdminProducts(); // Refresh the list after deleting
-            })
-            .catch(err => console.error("Error deleting:", err));
+            .then(data => { alert("✅ Deleted!"); loadAdminProducts(); })
+            .catch(err => console.error(err));
         }
 
-        // Load items when page opens
-        window.onload = loadAdminProducts;
+        // --------- Fetch & Display Orders ---------
+        function loadOrders() {
+            fetch('https://bakery-web-site.onrender.com/api/orders')
+            .then(response => response.json())
+            .then(orders => {
+                const ordersContainer = document.getElementById('admin-orders-list');
+                ordersContainer.innerHTML = '';
+                
+                if(orders.length === 0) {
+                    ordersContainer.innerHTML = '<p style="text-align: center; color: #777; font-size: 1.2em;">No orders received yet.</p>';
+                    return;
+                }
+
+                orders.forEach(order => {
+                    // Array of items to comma separated text
+                    let itemsList = Array.isArray(order.items) ? order.items.join(", ") : order.items;
+                    
+                    ordersContainer.innerHTML += `
+                        <div class="order-card">
+                            <h3>🧑‍💼 ${order.customer_name}</h3>
+                            <p><strong>📞 Contact:</strong> ${order.phone}</p>
+                            <p><strong>📍 Delivery Address:</strong> ${order.address}</p>
+                            <p><strong>🛍️ Order Items:</strong> <span class="order-items">${itemsList}</span></p>
+                            <p><strong>💰 Total Amount:</strong> ₹${order.total_amount}</p>
+                            <p><strong>📌 Status:</strong> <span class="order-status">${order.status || 'Pending'}</span></p>
+                        </div>
+                    `;
+                });
+            })
+            .catch(err => {
+                document.getElementById('admin-orders-list').innerHTML = '<p style="color: red; text-align: center;">Error loading orders.</p>';
+            });
+        }
+
+        // Load both products and orders when admin page opens
+        window.onload = function() {
+            loadAdminProducts();
+            loadOrders();
+        };
     </script>
 
 </body>
