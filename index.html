@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Poovil Bakery | Premium Quality & Taste</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    
     <style>
         /* Kerala Theme Color Palette */
         :root {
@@ -21,51 +19,22 @@
         body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--kasavu-cream); color: var(--text-dark); }
         h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
 
-        /* Navigation Bar */
         nav { background-color: #fff; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 10px rgba(212, 175, 55, 0.2); position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--kasavu-gold); }
         .logo { font-size: 2em; font-weight: 700; color: var(--kerala-green); text-decoration: none; display: flex; align-items: center; gap: 10px; }
         .nav-links { display: flex; gap: 25px; }
         .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 1.1em; transition: 0.3s; cursor: pointer; }
         .nav-links a:hover { color: var(--kerala-green); }
         
-        /* Premium Image-Based Hero Section */
-        .hero { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 85vh; 
-            background-color: var(--kasavu-cream); 
-            padding: 40px 20px;
-            box-sizing: border-box;
-        }
-        .hero-banner-link {
-            width: 100%;
-            max-width: 1100px;
-            display: block;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            border-radius: 16px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .hero-banner-link:hover {
-            transform: scale(1.015);
-        }
-        .hero-banner-link img {
-            width: 100%;
-            height: auto;
-            display: block;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-            border-radius: 16px;
-        }
+        .hero { display: flex; align-items: center; justify-content: center; min-height: 85vh; background-color: var(--kasavu-cream); padding: 40px 20px; box-sizing: border-box; }
+        .hero-banner-link { width: 100%; max-width: 1100px; display: block; transition: transform 0.3s ease; text-decoration: none; border-radius: 16px; overflow: hidden; cursor: pointer; }
+        .hero-banner-link:hover { transform: scale(1.015); }
+        .hero-banner-link img { width: 100%; height: auto; display: block; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12); border-radius: 16px; }
 
-        /* Sections */
         section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
         .section-title { text-align: center; font-size: 3em; color: var(--kerala-green); margin-bottom: 50px; position: relative; }
         .section-title::after { content: '🦚'; display: block; font-size: 0.4em; margin-top: 10px; color: var(--kasavu-gold); }
         .about-text { text-align: center; font-size: 1.2em; line-height: 1.8; color: #444; max-width: 900px; margin: 0 auto; }
 
-        /* Menu Grid */
         .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
         .product-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.05); text-align: center; padding-bottom: 25px; transition: transform 0.3s; border: 1px solid #f0eae1; border-bottom: 4px solid var(--kerala-green); }
         .product-card:hover { transform: translateY(-8px); box-shadow: 0 15px 25px rgba(27, 77, 62, 0.15); }
@@ -75,7 +44,6 @@
         .add-to-cart-btn { background-color: var(--kerala-green); color: white; border: none; padding: 12px 25px; border-radius: 4px; cursor: pointer; font-weight: 500; font-family: 'Poppins', sans-serif; transition: 0.3s; }
         .add-to-cart-btn:hover { background-color: var(--kasavu-gold); color: var(--kerala-green); }
         
-        /* Staff Section */
         .staff-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px; }
         .staff-card { background: white; border-radius: 12px; padding: 30px 20px; text-align: center; width: 250px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-bottom: 4px solid var(--kasavu-gold); transition: transform 0.3s; }
         .staff-card:hover { transform: translateY(-5px); }
@@ -83,7 +51,6 @@
         .staff-name { font-size: 1.5em; color: var(--kerala-green); margin: 10px 0 5px 0; font-family: 'Playfair Display', serif; }
         .staff-role { color: var(--accent-red); font-weight: 600; font-size: 1em; margin: 0; }
 
-        /* Cart Section */
         .cart-container { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border-top: 5px solid var(--kasavu-gold); }
         .cart-item { display: flex; justify-content: space-between; border-bottom: 1px dashed #ccc; padding: 15px 0; font-size: 1.1em; }
         .checkout-form { margin-top: 35px; display: flex; flex-direction: column; gap: 15px; }
@@ -91,7 +58,6 @@
         .checkout-btn { background-color: var(--accent-red); color: white; border: none; padding: 15px; border-radius: 4px; cursor: pointer; font-size: 1.2em; font-weight: 600; font-family: 'Poppins', sans-serif; transition: 0.3s; }
         .checkout-btn:hover { background-color: #8a2525; }
 
-        /* Footer */
         footer { background-color: var(--kerala-green); color: var(--kasavu-cream); text-align: center; padding: 50px 20px; margin-top: 50px; border-top: 5px solid var(--kasavu-gold); }
         footer h3 { font-size: 2.5em; color: var(--kasavu-gold); margin-bottom: 20px; }
         footer p { margin: 8px 0; font-size: 1.1em; opacity: 0.9; }
@@ -118,13 +84,9 @@
         </a>
     </div>
 
-   <section id="about">
+    <section id="about" style="display: none;">
         <h2 class="section-title">A Legacy of Taste</h2>
-        <p class="about-text">
-            Welcome to <strong>Poovil Bakery</strong>! Our story is rooted in the rich culinary heritage of Kerala, preserving authentic tastes passed down through generations. What began as a humble passion for traditional flavors has grown into a legacy of pure, uncompromised quality. 
-            <br><br>
-            While we stay true to our nostalgic roots with our classic hot <b>Snacks</b> and savory <b>Mixtures</b>, we also embrace the modern palate with bespoke <b>Birthday Cakes, artisanal Ice Creams, fresh Juices,</b> and refreshing <b>Cold Beverages</b>. Every item we serve is a piece of our history, crafted with love, tradition, and the finest ingredients.
-        </p>
+        <p class="about-text">Welcome to <strong>Poovil Bakery</strong>! Our story is rooted in the rich culinary heritage of Kerala, preserving authentic tastes passed down through generations. What began as a humble passion for traditional flavors has grown into a legacy of pure, uncompromised quality. <br><br> While we stay true to our nostalgic roots with our classic hot <b>Snacks</b> and savory <b>Mixtures</b>, we also embrace the modern palate with bespoke <b>Birthday Cakes, artisanal Ice Creams, fresh Juices,</b> and refreshing <b>Cold Beverages</b>. Every item we serve is a piece of our history, crafted with love, tradition, and the finest ingredients.</p>
     </section>
 
     <section id="menu" style="display: none;">
@@ -135,35 +97,11 @@
 
     <section id="staff" style="background-color: #faf7f0; display: none;">
         <h2 class="section-title">Meet Our Team</h2>
-        <p class="about-text" style="margin-bottom: 40px;">The passionate hands and smiling faces that make Poovil Bakery truly special.</p>
         <div class="staff-grid">
-            
-            <div class="staff-card">
-                <img src="founder.png" alt="Founder" class="staff-img">
-                <h3 class="staff-name">Vapputty</h3>
-                <p class="staff-role">Founder & Owner</p>
-            </div>
-
-            <div class="staff-card">
-                <img src="manger.png" alt="Manger" class="staff-img">
-                <h3 class="staff-name">Dilshad P .</h3>
-                <p class="staff-role">Store Manager</p>
-            </div>
-
-            <div class="staff-card">
-                <img src="Juice Maker.png" alt="Juice Maker" class="staff-img">
-                <h3 class="staff-name">Muhammed Rashid.</h3>
-                <p class="staff-role">Juice Maker</p>
-            </div>
-
-             <div class="staff-card">
-                <img src="Stock Controller.png" alt="Juice Maker" class="staff-img">
-                <h3 class="staff-name">Muhammed Rashid.</h3>
-                <p class="staff-role">Stock Controller</p>
-            </div>
-
-    
-  
+            <div class="staff-card"><img src="founder.png" alt="Founder" class="staff-img"><h3 class="staff-name">Vapputty</h3><p class="staff-role">Founder & Owner</p></div>
+            <div class="staff-card"><img src="manger.png" alt="Manger" class="staff-img"><h3 class="staff-name">Dilshad P .</h3><p class="staff-role">Store Manager</p></div>
+            <div class="staff-card"><img src="Juice Maker.png" alt="Juice Maker" class="staff-img"><h3 class="staff-name">Muhammed Rashid.</h3><p class="staff-role">Juice Maker</p></div>
+            <div class="staff-card"><img src="Stock Controller.png" alt="Stock Controller" class="staff-img"><h3 class="staff-name">Muhammed Rashid.</h3><p class="staff-role">Stock Controller</p></div>
         </div>
     </section>
 
@@ -172,7 +110,6 @@
         <div class="cart-container" id="cart-container" style="display: none;">
             <div id="cart-items"></div>
             <h3 id="cart-total" style="text-align: right; color: var(--accent-red); margin-top: 20px; font-size: 1.5em; font-family: 'Playfair Display', serif;">Total: ₹0</h3>
-
             <div class="checkout-form">
                 <input type="text" id="customer_name" placeholder="Full Name" required>
                 <input type="tel" id="phone" placeholder="Contact Number" required>
@@ -194,53 +131,24 @@
 
     <script>
         let cart = [];
-
-        // JavaScript function to unlock and reveal website contents smoothly
         function revealAndScroll(targetId) {
-            // Target all sections and footer
-            const sections = ['about', 'menu', 'staff', 'cart'];
-            sections.forEach(id => {
-                document.getElementById(id).style.display = 'block';
-            });
+            ['about', 'menu', 'staff', 'cart'].forEach(id => document.getElementById(id).style.display = 'block');
             document.querySelector('footer').style.display = 'block';
-
-            // Wait a split second for display block to trigger, then smooth scroll
-            setTimeout(() => {
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 30);
+            setTimeout(() => document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' }), 30);
         }
 
         function fetchProducts() {
-           fetch('https://bakery-web-site.onrender.com/api/products')
+            fetch('https://bakery-web-site.onrender.com/api/products')
                 .then(response => response.json())
                 .then(products => {
                     const menuGrid = document.getElementById('menu-grid');
                     document.getElementById('loading').style.display = 'none';
                     menuGrid.innerHTML = ''; 
-                    
-                    if(products.error) {
-                        menuGrid.innerHTML = '<p style="text-align:center;">Error loading items. Please try again later.</p>';
-                        return;
-                    }
-
+                    if(products.error) return;
                     products.forEach(product => {
-                        const productCard = `
-                            <div class="product-card">
-                                <img src="${product.image_url}" class="product-image" onerror="this.src='https://images.unsplash.com/photo-1509365465994-3b5e40e6b72a?w=400&q=80'">
-                                <div style="padding: 15px;">
-                                    <h3>${product.name}</h3>
-                                    <p>₹${product.price}</p>
-                                    <button class="add-to-cart-btn" onclick="addToCart('${product._id}', '${product.name}', ${product.price})">Add to Cart</button>
-                                </div>
-                            </div>
-                        `;
-                        menuGrid.innerHTML += productCard;
+                        menuGrid.innerHTML += `<div class="product-card"><img src="${product.image_url}" class="product-image"><div style="padding:15px;"><h3>${product.name}</h3><p>₹${product.price}</p><button class="add-to-cart-btn" onclick="addToCart('${product._id}', '${product.name}', ${product.price})">Add to Cart</button></div></div>`;
                     });
-                })
-                .catch(err => console.log('Fetch error:', err));
+                });
         }
 
         function addToCart(id, name, price) {
@@ -250,39 +158,17 @@
         }
 
         function updateCartUI() {
-            const cartContainer = document.getElementById('cart-container');
-            const emptyMsg = document.getElementById('empty-cart-msg');
-            const cartItemsDiv = document.getElementById('cart-items');
-            
-            if(cart.length > 0) {
-                cartContainer.style.display = 'block';
-                emptyMsg.style.display = 'none';
-            } else {
-                cartContainer.style.display = 'none';
-                emptyMsg.style.display = 'block';
-            }
-
-            cartItemsDiv.innerHTML = '';
-            let total = 0;
-            
-            cart.forEach(item => {
-                total += item.price;
-                cartItemsDiv.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>₹${item.price}</span></div>`;
-            });
+            const cartContainer = document.getElementById('cart-container'), emptyMsg = document.getElementById('empty-cart-msg'), cartItemsDiv = document.getElementById('cart-items');
+            if(cart.length > 0) { cartContainer.style.display = 'block'; emptyMsg.style.display = 'none'; }
+            cartItemsDiv.innerHTML = ''; let total = 0;
+            cart.forEach(item => { total += item.price; cartItemsDiv.innerHTML += `<div class="cart-item"><span>${item.name}</span><span>₹${item.price}</span></div>`; });
             document.getElementById('cart-total').innerText = `Total: ₹${total}`;
         }
 
         function placeOrder() {
             if(cart.length === 0) return;
-            const orderData = {
-                customer_name: document.getElementById('customer_name').value,
-                phone: document.getElementById('phone').value,
-                address: document.getElementById('address').value,
-                items: cart.map(item => item.name),
-                total_amount: cart.reduce((sum, item) => sum + item.price, 0)
-            };
-
-            fetch('https://bakery-web-site.onrender.com/api/place-order', { ... })
+            const orderData = { customer_name: document.getElementById('customer_name').value, phone: document.getElementById('phone').value, address: document.getElementById('address').value, items: cart.map(item => item.name), total_amount: cart.reduce((sum, item) => sum + item.price, 0) };
+            fetch('https://bakery-web-site.onrender.com/api/place-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
@@ -290,18 +176,10 @@
             .then(res => res.json())
             .then(data => {
                 document.getElementById('order-message').innerText = "✅ " + data.message;
-                document.getElementById('order-message').style.color = "green";
-                cart = [];
-                updateCartUI();
-                
-                document.getElementById('customer_name').value = '';
-                document.getElementById('phone').value = '';
-                document.getElementById('address').value = '';
-                
+                cart = []; updateCartUI();
                 setTimeout(() => { document.getElementById('order-message').innerText = ''; }, 4000);
             });
         }
-
         window.onload = fetchProducts;
     </script>
 </body>
