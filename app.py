@@ -47,6 +47,20 @@ def add_product():
     result = products_collection.insert_one(new_product)
     return jsonify({"message": "Product added!", "id": str(result.inserted_id)}), 201
 
+# --- പുതിയ DELETE ഫീച്ചർ ഇവിടെയാണ് കൂട്ടിച്ചേർത്തിരിക്കുന്നത് ---
+@app.route('/api/delete-product/<product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    try:
+        result = products_collection.delete_one({"_id": ObjectId(product_id)})
+        if result.deleted_count == 1:
+            return jsonify({"message": "Product deleted successfully!"}), 200
+        else:
+            return jsonify({"error": "Product not found"}), 404
+    except Exception as e:
+        print("Error deleting product:", e)
+        return jsonify({"error": "Internal Server Error"}), 500
+# -----------------------------------------------------------------
+
 @app.route('/api/place-order', methods=['POST'])
 def place_order():
     data = request.json
@@ -74,4 +88,4 @@ def get_orders():
 
 if __name__ == '__main__':
     # use_reloader=False is added to prevent Windows errors
-     app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5000)
