@@ -66,6 +66,36 @@
         footer { background-color: var(--kerala-green); color: var(--kasavu-cream); text-align: center; padding: 50px 20px; margin-top: 50px; border-top: 5px solid var(--kasavu-gold); }
         footer h3 { font-size: 2.5em; color: var(--kasavu-gold); margin-bottom: 20px; }
         footer p { margin: 8px 0; font-size: 1.1em; opacity: 0.9; }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                padding: 15px 10px;
+                gap: 15px;
+            }
+            .logo {
+                font-size: 1.6em;
+                text-align: center;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
+            .nav-links a {
+                font-size: 1em;
+            }
+            section {
+                padding: 40px 15px;
+            }
+            .section-title {
+                font-size: 2.2em;
+            }
+            .hero {
+                min-height: 60vh;
+            }
+        }
     </style>
 </head>
 <body>
